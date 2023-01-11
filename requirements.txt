@@ -138,3 +138,4 @@ XlsxWriter==3.0.3
 yarl==1.7.2
 yfinance==0.1.67
 zipp==3.7.0
+gunicorn==20.1.0
