@@ -112,3 +112,19 @@
     height: 300px;
     width: auto;
 }
+
+@media only screen and (max-width: 1215px)
+{
+    .product_card
+    {
+        width: 48%;
+    }
+}
+
+@media only screen and (max-width: 411px)
+{
+    .product_card
+    {
+        width: 100%;
+    }
+}
