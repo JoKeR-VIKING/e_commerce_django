@@ -44,6 +44,7 @@ google-auth==2.5.0
 google-auth-httplib2==0.1.0
 google-auth-oauthlib==0.4.6
 googleapis-common-protos==1.54.0
+gunicorn==20.1.0
 h11==0.13.0
 halo==0.0.31
 html-parser==0.2
@@ -138,4 +139,3 @@ XlsxWriter==3.0.3
 yarl==1.7.2
 yfinance==0.1.67
 zipp==3.7.0
-gunicorn==20.1.0
