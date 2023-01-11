@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load filters %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/store.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="all_products mb-5">
+        {% for product in all_products %}
+            {% if category and product.category != category %}
+            {% else %}
+                <div class="product_card">
+                    <div class="imgBox">
+                        <img class="product_img" src="{{ product.image.url }}" alt="Image not found!">
+                    </div>
+                    <div class="contentBox">
+                        <h3>
+                            {% if product.brand != "non-branded" %}
+                                {{ product.brand | replaceChar:"-, " }}
+                            {% endif %}
+                            {{ product.title | replaceChar:"-, " }}
+                        </h3>
+                        <h2 class="price">{{ product.price | indianPrice }}</h2>
+                        <a href="{% url 'store:product_info' product.slug %}" class="buy">View more</a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

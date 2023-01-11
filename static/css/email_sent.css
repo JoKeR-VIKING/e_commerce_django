@@ -1,0 +1,24 @@
+nav
+{
+    display: none !important;
+}
+
+body
+{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+video
+{
+    pointer-events: none;
+}
+
+h4
+{
+    font-weight: 700 !important;
+}

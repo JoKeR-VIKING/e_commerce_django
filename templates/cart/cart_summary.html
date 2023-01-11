@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load filters %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/cart_summary.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="main mt-4 ms-4 mb-5">
+        <h3 class="text-capitalize">Your Cart</h3>
+        {% for item in cart %}
+            {% with product=item.product %}
+                <div class="product p-3 mb-4 rounded-corner" id="{{ product.id }}">
+                    <div class="left">
+                        <img class="product_img" src="{{ product.image.url }}" alt="Image not found">
+                    </div>
+                    <div class="right">
+                        <a href="{% url 'store:product_info' product.slug %}" class="title h2 text-capitalize">{{ product.title | replaceChar:"-, " }}</a>
+
+                        <div class="price_details mt-5">
+                            <p class="fw-normal text-capitalize text-white">Price</p>
+                            <p class="price lead fw-bold text-white">{{ product.price | indianPrice }}</p>
+                        </div>
+
+                        <div class="price_details" style="margin-top: 0">
+                            <div>
+                                <p class="fw-normal text-white">Quantity</p>
+                                <select class="quantity form-select-sm rounded-corner text-white p-2 {{ product.id }}" data-index="{{ product.id }}">
+                                    <option value="{{ item.qty }}" selected disabled hidden>{{ item.qty }}</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>
+                            </div>
+                            <button class="delete-btn btn rounded-corner text-capitalize text-black" value="{{ product.id }}">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            {% endwith %}
+        {% endfor %}
+
+        <div class="final_price mt-4 p-3 justify-content-end align-items-center" style="display: flex">
+            <h3 class="text-capitalize me-5">Total price: {{ cart.total | indianPrice }}</h3>
+            <a href="{% url 'payment:checkout' %}" class="buy-btn btn rounded-corner text-capitalize text-black">
+                Buy Now
+            </a>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).on('click', '.delete-btn', function (event) {
+            event.preventDefault();
+            let product_id = $(this).val();
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'cart:cart_delete' %}",
+                data: {
+                    product_id: product_id,
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    action: 'post'
+                },
+                success: function (json) {
+                    if (json.cart_qty === 0)
+                    {
+                        window.location.href = "{% url 'cart:cart_summary' %}";
+                        return
+                    }
+
+                    let indianPrice = json.cart_total.toLocaleString('en-IN', {
+                        maximumFractionDigits: 2,
+                        style: 'currency',
+                        currency: 'INR',
+                    });
+
+                    $('.cart_qty').text(json.cart_qty);
+                    $(`#${product_id}`).remove();
+                    $('.final_price h3').text(`Total price: ${indianPrice}`);
+                },
+                error: function (xhr, msg, err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        $(document).on('change', '.quantity', function (event) {
+            event.preventDefault();
+            let product_id = $(this).attr('data-index');
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'cart:cart_update' %}",
+                data: {
+                    product_id: product_id,
+                    quantity: $(`.${product_id} option:selected`).text(),
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    action: 'post'
+                },
+                success: function (json) {
+                    if (json.cart_qty === 0)
+                    {
+                        window.location.href = "{% url 'cart:cart_summary' %}";
+                        return
+                    }
+
+                    let indianPrice = json.cart_total.toLocaleString('en-IN', {
+                        maximumFractionDigits: 2,
+                        style: 'currency',
+                        currency: 'INR',
+                    });
+
+                    $('.cart_qty').text(json.cart_qty);
+                    $('.final_price h3').text(`Total price: ${indianPrice}`);
+                },
+                error: function (xhr, msg, err) {
+                    console.log(err);
+                }
+            });
+        });
+    </script>
+{% endblock %}

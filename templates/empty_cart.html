@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/empty_cart.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="emoji_card">
+        <div class="emoji-sad mb-4">
+            <div class="face">
+                <div class="eyebrow-left"></div>
+                <div class="eyebrow-right"></div>
+                <div class="eye-left"></div>
+                <div class="eye-right"></div>
+                <div class="mouth-sad"></div>
+            </div>
+        </div>
+        
+        {% if request.path == '/cart/' %}
+            <p class="lead text-white font-weight-bolder">Oops! Looks like the cart is empty</p>
+        {% else %}
+            <p class="lead text-white font-weight-bolder">Oops! Looks like you have no orders</p>
+        {% endif %}
+        <p class="lead text-white font-weight-bolder">Make me happy by shopping something</p>
+
+        <a href="{% url 'store:store' %}" class="btn text-uppercase text-black">
+            Go Shopping
+        </a>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $('.btn').hover(function () {
+            $('.mouth-sad').addClass('mouth-happy').removeClass('mouth-sad');
+        }, function () {
+            $('.mouth-happy').addClass('mouth-sad').removeClass('mouth-happy');
+        });
+    </script>
+{% endblock %}

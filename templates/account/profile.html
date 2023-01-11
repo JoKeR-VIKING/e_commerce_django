@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11;">
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="4000">
+                        <div class="toast-header">
+                            <strong class="me-auto">Product Destination</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            {{ message }}
+                        </div>
+                    </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <form class="register_form p-5 rounded-corner" action="{% url 'account:profile' %}" method="POST">
+        <h3 class="title text-uppercase font-weight-bolder" style="font-size: 1.83rem">
+            Update <span style="color: #FFCE00; font-weight: 700">Profile</span>
+        </h3>
+        {% csrf_token %}
+        {{ form | crispy }}
+        <div class="text-center">
+            <input type="submit" class="btn rounded-corner text-uppercase text-black" value="Update email">
+            <button class="btn rounded-corner text-uppercase text-black delete-button ms-3" value="Delete account" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Delete account
+            </button>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Account delete</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            Are you sure you want to delete your account ?
+                            <br>
+                            If yes, please click the button below.
+                        </div>
+
+                        <div class="modal-footer justify-content-center">
+                            <a href="{% url 'account:delete' %}" type="button" class="btn btn-danger text-uppercase">I am sure</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form class="register_form p-5 rounded-corner" action="{% url 'account:manage_shipping' %}" method="POST">
+        <h3 class="title text-uppercase font-weight-bolder text-center" style="font-size: 1.83rem">
+            Update <span style="color: #FFCE00; font-weight: 700">Shipping Info</span>
+        </h3>
+        {% csrf_token %}
+        {{ shipping_form | crispy }}
+        <div class="text-center">
+            <input type="submit" class="btn rounded-corner text-uppercase text-black" value="Update shipping details">
+        </div>
+    </form>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $('.delete-button').click(function (event) {
+            event.preventDefault();
+        });
+
+        setTimeout(function () {
+            $('.toast').toast('show');
+        }, 100)
+    </script>
+{% endblock %}

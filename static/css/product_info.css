@@ -1,0 +1,33 @@
+body
+{
+    overflow-x: hidden;
+}
+
+.price_details
+{
+    width: 90%;
+    height: 19%;
+    margin-top: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.add-btn
+{
+    border: none;
+    outline: none;
+    font-weight: 700 !important;
+}
+
+.quantity
+{
+    outline: none;
+    border: none;
+}
+
+.product_img img
+{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22) !important;
+}

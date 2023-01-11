@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load filters %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/product_info.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-between mt-3">
+        <div class="col-md-5">
+            <img class="product_img" src="{{ product.image.url }}" alt="" width="100%" height="100%">
+        </div>
+
+        <div class="col-md-5">
+            <h1 class="display-5 text-capitalize">{{ product.title | replaceChar:"-, " }}</h1>
+            <h5 class="text-capitalize">{{ product.brand | replaceChar:"-, " }}</h5>
+
+            <p class="lead mt-5 text-white">
+                {{ product.description }}
+            </p>
+
+            <div class="price_details rounded-corner">
+                <p class="fw-normal text-white font-weight-bolder">Price</p>
+                <p class="price lead fw-bold text-white">{{ product.price | indianPrice }}</p>
+            </div>
+
+            <div class="price_details rounded-corner" style="margin-top: 0">
+                <div>
+                    <p class="fw-normal text-white">Quantity</p>
+                    <select class="quantity form-select-sm rounded-corner p-2" style="">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+
+                <button class="add-btn btn rounded-corner text-uppercase text-black p-3" id="liveToastBtn" value="{{ product.id }}" style="background-color: #FFCE00">
+                    Add to cart
+                </button>
+
+                <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="2000">
+                        <div class="toast-header">
+                            <strong class="me-auto">Product Destination</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body text-capitalize">
+                            {{ product.title | replaceChar:"-, " }} added to cart.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        document.getElementById("liveToastBtn").onclick = function() {
+            $('.toast').toast('show');
+        };
+
+        $(document).on('click', '.add-btn', function(event) {
+            event.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'cart:card_add' %}",
+                data: {
+                    product_id: $('.add-btn').val(),
+                    quantity: $('.quantity option:selected').text(),
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    action: 'post'
+                },
+                success: function (json) {
+                    $('.cart_qty').text(json.cart_qty);
+                },
+                error: function (xhr, msg, err) {
+                    console.log(err)
+                }
+            });
+        });
+    </script>
+{% endblock %}

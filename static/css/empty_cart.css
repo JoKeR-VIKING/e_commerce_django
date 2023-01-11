@@ -1,0 +1,135 @@
+nav
+{
+    display: none !important;
+}
+
+.emoji_card
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+body
+{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.emoji-smile
+{
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background: #ffd200;
+    border-radius: 50%;
+}
+
+.emoji-sad
+{
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background: #ffd200;
+    border-radius: 50%;
+    margin-left: 1%;
+}
+
+.face
+{
+    width: inherit;
+    height: inherit;
+}
+
+.eyebrow-left
+{
+    position: absolute;
+    height: 20px;
+    width: 24px;
+    left: 27px;
+    border-radius: 50%;
+    border: 5px solid transparent;
+    box-sizing: border-box;
+    border-top-color: black;
+    top: 25px;
+}
+
+.eyebrow-right
+{
+    position: absolute;
+    height: 20px;
+    width: 24px;
+    right: 27px;
+    border-radius: 50%;
+    border: 5px solid transparent;
+    box-sizing: border-box;
+    border-top-color: black;
+    top: 25px;
+}
+
+.eye-left
+{
+    position: absolute;
+    width: 11px;
+    height: 12px;
+    background: black;
+    left: 33px;
+    top: 40px;
+    border-radius: 50%;
+}
+
+.eye-right
+{
+    position: absolute;
+    width: 11px;
+    height: 12px;
+    background: black;
+    right: 33px;
+    top: 40px;
+    border-radius: 50%;
+}
+
+.mouth-happy
+{
+    position: absolute;
+    width: 78px;
+    height: 80px;
+    border: 6px solid transparent;
+    top: 12px;
+    left: 20px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border-bottom-color: black;
+    transition: top linear 0.7s !important;
+}
+
+.mouth-sad
+{
+    position: absolute;
+    width: 78px;
+    height: 80px;
+    border: 6px solid transparent;
+    top: 70px;
+    left: 20px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border-top-color: black;
+    transition: top linear 0.7s !important;
+}
+
+.lead
+{
+    font-size: 1.5rem !important;
+}
+
+.btn
+{
+    font-size: 1.3rem !important;
+    background-color: #FFCE00 !important;
+    font-weight: 700 !important;
+}

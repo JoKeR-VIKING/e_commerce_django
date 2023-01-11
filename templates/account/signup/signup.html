@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11;">
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="4000">
+                        <div class="toast-header">
+                            <strong class="me-auto">Product Destination</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            {{ message }}
+                        </div>
+                    </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <form class="register_form p-5 rounded-corner" action="{% url 'account:signup' %}" method="POST">
+        <h3 class="title text-uppercase font-weight-bolder">
+            Sign <span style="color: #FFCE00; font-weight: 700">Up</span>
+        </h3>
+        {% csrf_token %}
+        {{ form | crispy }}
+        <div class="text-center">
+            <input type="submit" class="btn rounded-corner text-uppercase text-black" value="Sign Up">
+        </div>
+    </form>
+{% endblock %}
+
+{% block script %}
+    <script>
+        setTimeout(function () {
+            $('.toast').toast('show');
+        }, 100)
+    </script>
+{% endblock %}

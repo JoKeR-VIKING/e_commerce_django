@@ -1,0 +1,43 @@
+*
+{
+    -webkit-user-drag: none;
+    user-select: none;
+    font-weight: 400;
+}
+
+nav
+{
+    border: none !important;
+}
+
+.rounded-corner
+{
+    border-radius: 10px !important;
+}
+
+.hover-underline-animation
+{
+    display: inline-block;
+    position: relative;
+    color: #FFCE00;
+}
+
+.hover-underline-animation:after
+{
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #FFCE00;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover:after
+{
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}

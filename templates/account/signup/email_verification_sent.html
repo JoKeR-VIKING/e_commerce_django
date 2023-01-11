@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/email_sent.css' %}">
+{% endblock %}
+
+{% block body %}
+    <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_yucppre5.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+    <h4 class="mt-3 text-uppercase" style="text-align: center">
+        We need to verify your mail first. <br> Check your inbox.
+    </h4>
+{% endblock %}

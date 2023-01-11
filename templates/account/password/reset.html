@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/reset_password.css' %}">
+{% endblock %}
+
+{% block body %}
+    <form class="register_form p-5 rounded-corner" method="POST">
+        <h3 class="title text-uppercase font-weight-bolder" style="font-size: 1.83rem">
+            Reset <span style="color: #FFCE00; font-weight: 700">Password</span>
+        </h3>
+
+        {% csrf_token %}
+        {{ form | crispy }}
+        <div class="text-center">
+            <input type="submit" class="btn rounded-corner text-uppercase text-black" value="Confirm new password">
+        </div>
+    </form>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $('#id_new_password1').attr('placeholder', 'Password');
+        $('#id_new_password2').attr('placeholder', 'Confirm Password');
+    </script>
+{% endblock %}

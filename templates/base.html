@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+
+        {% if title %}
+            <title>{{ title }}</title>
+        {% endif %}
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" href="{% static 'img/brand_logo_favicon.jpeg' %}">
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+        {% block head %}
+
+        {% endblock %}
+
+        <link rel="stylesheet" href="https://bootswatch.com/5/cyborg/bootstrap.min.css">
+        <script src="https://kit.fontawesome.com/f6a1fc2dc1.js" crossorigin="anonymous"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-2 text-uppercase">
+            <div class="container-fluid">
+                <a class="hover-underline-animation navbar-brand" href="{% url 'store:store' %}">
+                    <img src="{% static 'img/brand_logo.jpeg' %}" alt="Logo" width="50" height="44" class="d-inline-block align-text-center">
+                    Product Destination
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropend">
+                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Categories
+                            </a>
+                            <ul class="dropdown-menu rounded-corner">
+                                <li><a class="dropdown-item" href="{% url 'store:store' %}">All</a></li>
+                                {% for category in all_categories %}
+                                    <li><a class="dropdown-item" href="{% url 'store:search' category.slug %}">{{ category.name | title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        {% if not request.user.is_authenticated %}
+                            <li class="nav-item me-3">
+                                <a class=" hover-underline-animation nav-link active" href="{% url 'account:signup' %}">Sign Up</a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="hover-underline-animation nav-link active" href="{% url 'account:signin' %}">Sign In</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item me-3">
+                                <a class="hover-underline-animation nav-link active" href="{% url 'payment:my_orders' %}">My Orders</a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="hover-underline-animation nav-link active" href="{% url 'account:profile' %}">Profile</a>
+                            </li>
+                            <li class="nav-item me-3">
+                                <a class="hover-underline-animation nav-link active" href="{% url 'account:logout' %}">Logout</a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item me-3">
+                            <a class="hover-underline-animation nav-link active" href="{% url 'cart:cart_summary' %}">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="cart_qty">
+                                    {% with qty=cart|length %}
+                                        {% if qty > 0 %}
+                                            {{ qty }}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    {% endwith %}
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        {% block body %}
+
+        {% endblock %}
+
+        {% block script %}
+
+        {% endblock %}
+    </body>
+</html>

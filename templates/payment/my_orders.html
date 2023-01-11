@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load filters %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/cart_summary.css' %}">
+{% endblock %}
+
+{% block body %}
+    {% for order in orders %}
+        <a class="btn text-black m-3 justify-content-center" data-bs-toggle="collapse" href="#{{ order.id }}" role="button" aria-expanded="false" aria-controls="collapseExample" style="width: 40%">
+            Order #{{ order.id }} &nbsp; Date Ordered: {{ order.date_ordered }}
+        </a>
+
+        {% for item in order_items %}
+            {% if item.order == order %}
+                <div class="collapse" id="{{ order.id }}">
+                    <div class="product p-3 mb-4 rounded-corner">
+                        <div class="left">
+                            <img class="product_img" src="{{ item.product.image.url }}" alt="Image not found">
+                        </div>
+                        <div class="right">
+                            <a href="{% url 'store:product_info' item.product.slug %}" class="title h2 text-capitalize">{{ item.product.title | replaceChar:"-, " }}</a>
+
+                            <div class="price_details mt-5">
+                                <p class="fw-normal text-capitalize text-white">Price</p>
+                                <p class="price lead fw-bold text-white">{{ item.product.price | indianPrice }}</p>
+                            </div>
+
+                            <div class="price_details" style="margin-top: 0">
+                                <div>
+                                    <p class="fw-normal text-white">Quantity: {{ item.quantity }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
