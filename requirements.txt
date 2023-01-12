@@ -97,6 +97,7 @@ pyquery==1.4.3
 PyRect==0.1.4
 PyScreeze==0.1.28
 python-dateutil==2.8.2
+python-dotenv==0.21.0
 python-pptx==0.6.21
 pyttsx3==2.90
 pytweening==1.0.4
