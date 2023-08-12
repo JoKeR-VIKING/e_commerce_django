@@ -79,7 +79,6 @@ protobuf==3.19.4
 py-moneyed==0.8.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-PyAudio @ file:///C:/Users/prath/Downloads/PyAudio-0.2.11-cp310-cp310-win_amd64.whl
 PyAutoGUI==0.9.53
 pycparser==2.21
 pyee==8.2.2
