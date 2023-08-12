@@ -25,7 +25,7 @@ cryptography==36.0.1
 cssselect==1.1.0
 cycler==0.11.0
 dacite==1.6.0
-Django==4.0.3
+Django==3.2.20
 django-advanced-password-validation==1.1.1
 django-crispy-forms==1.14.0
 django-mathfilters==1.0.0
